@@ -238,13 +238,18 @@ All managed via `vercel env pull` / `vercel.ts`.
 - [ ] **USER:** Enable Vercel AI Gateway + `vercel env pull` to write `AI_GATEWAY_API_KEY` into `.env.local`
 
 ### Phase 2 — Backend
-- [ ] `convex/schema.ts` — threads + messages tables
-- [ ] Install `@convex-dev/rag` and `@convex-dev/rate-limiter`
-- [ ] Register both in `convex/convex.config.ts`
-- [ ] `lib/ai.ts` — Gateway client, model IDs as constants
-- [ ] `convex/rag.ts` — instantiate `RAG` with Cohere multilingual
-- [ ] `convex/threads.ts` — `getOrCreateThread`, `listMessages`, `ask` action
-- [ ] Rate limiter rules: 30/hr, 200/day per IP
+- [x] `convex/schema.ts` — `threads` (indexed by `sessionId`) + `messages` (indexed by `threadId`) with optional `citations`
+- [x] `convex/convex.config.ts` — registers `rag` + `rateLimiter` components
+- [x] `lib/ai.ts` — `EMBEDDING_MODEL_ID`, `EMBEDDING_DIMENSION`, `GENERATION_MODEL_ID`, `DOCUMENT_NAMESPACE`, `DOCUMENT_TITLE_AR`, Arabic `SYSTEM_PROMPT_AR`
+- [x] `convex/rag.ts` — `RAG` instance, embedding via `gateway.embeddingModel("cohere/embed-multilingual-v3.0")`, 1024-dim; page info travels in chunk `metadata` (no entry-level filters)
+- [x] `convex/rateLimit.ts` — `askPerHour` (30/hr), `askPerDay` (200/day), both `fixed window`, keyed by `sessionId`
+- [x] `convex/threads.ts`:
+  - `ensureThread(sessionId)` — mutation, returns existing-or-new `Id<"threads">`
+  - `listMessages(threadId)` — query, in-order, `.take(200)`
+  - `saveUserMessage` / `saveAssistantMessage` — internal mutations
+  - `retrieveContext` — action: rate-limit → persist user msg → `rag.search` with ±1 chunk context + 0.3 score threshold → return `{ contextText, citations[], userMessageId }`
+- [x] Push verified: `npx convex dev --once` green, Next.js build clean
+- ℹ️ Streaming `ask` flow lives in Next.js route handler (Phase 4) — it will call `retrieveContext`, stream `streamText(model=gateway("anthropic/claude-sonnet-4-6"))`, then call `saveAssistantMessage` on finish
 
 ### Phase 3 — Ingestion
 - [ ] Copy PDF → `public/uae-code.pdf`
