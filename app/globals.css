@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@plugin "@aegov/design-system";
+
+/*
+  Bind next/font/google loads to the UAE Design System font CSS variables.
+  UAE DS root.css assigns --font-heading/--font-body in :root[dir="rtl"] to
+  var(--font-alexandria)/var(--font-notokufi); we override those here so our
+  next/font self-hosted, subset-optimised loads are used instead of the DS
+  package's Google-CDN @font-face fallbacks.
+*/
+:root[dir="rtl"],
+[dir="rtl"] {
+  --font-alexandria: var(--next-alexandria), "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --font-notokufi: var(--next-notokufi), ui-sans-serif, "Helvetica Neue", sans-serif;
+  --font-heading: var(--font-alexandria);
+  --font-body: var(--font-notokufi);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}

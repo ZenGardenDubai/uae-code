@@ -224,14 +224,18 @@ All managed via `vercel env pull` / `vercel.ts`.
 ## 12. Progress tracker
 
 ### Phase 1 — Scaffold
-- [ ] `pnpm create next-app@latest` (TS, App Router, Tailwind)
-- [ ] Install `@aegov/design-system-react` + configure Tailwind plugin
-- [ ] Set `<html lang="ar" dir="rtl">` + load Alexandria & Noto Kufi Arabic via `next/font/google` and bind to UAE DS `--font-heading` / `--font-body`
-- [ ] `npx convex dev` — initialize Convex project
-- [ ] `vercel link` — link to Vercel project
-- [ ] Enable Vercel AI Gateway, pull `AI_GATEWAY_API_KEY` via `vercel env pull`
-- [ ] Create `vercel.ts` config
-- [ ] Verify hello-world page renders RTL in browser
+- [x] `pnpm create next-app@latest` — Next.js 16.2.4 + React 19.2.4 + TS 5.9 + Tailwind 4 + Turbopack, App Router, no `src/` dir
+- [x] Install `@aegov/design-system-react@1.1.2` + `@aegov/design-system@3.0.7` Tailwind plugin (registered via `@plugin` in `globals.css`)
+- [x] Install Convex stack: `convex@1.36`, `@convex-dev/rag@0.7.2`, `@convex-dev/rate-limiter@0.3.2`
+- [x] Install AI stack: `ai@6.0.168`, `@ai-sdk/gateway@3.0.104`, `zod@4`
+- [x] Install ingestion dev deps: `pdfjs-dist@5.6`, `tsx@4.21`
+- [x] Set `<html lang="ar" dir="rtl">` + load Alexandria & Noto Kufi Arabic via `next/font/google`, override UAE DS `--font-heading` / `--font-body` in `app/globals.css`
+- [x] Create `vercel.ts` (framework=nextjs, pnpm build/install, PDF cache-control header)
+- [x] Move source PDF → `public/uae-code.pdf`
+- [x] Verify hello-world renders RTL in Chrome (dir="rtl", Alexandria on H1, Noto Kufi Arabic on body)
+- [ ] **USER:** `npx convex dev` — interactive login + project provisioning
+- [ ] **USER:** `vercel link` — link local repo to the Vercel project
+- [ ] **USER:** Enable Vercel AI Gateway + `vercel env pull` to write `AI_GATEWAY_API_KEY` into `.env.local`
 
 ### Phase 2 — Backend
 - [ ] `convex/schema.ts` — threads + messages tables

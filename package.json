@@ -1,0 +1,37 @@
+{
+  "name": "uae-code",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@aegov/design-system": "^3.0.7",
+    "@aegov/design-system-react": "^1.1.2",
+    "@ai-sdk/gateway": "^3.0.104",
+    "@convex-dev/rag": "^0.7.2",
+    "@convex-dev/rate-limiter": "^0.3.2",
+    "ai": "^6.0.168",
+    "convex": "^1.36.0",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vercel/config": "^0.2.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "pdfjs-dist": "^5.6.205",
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
