@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+set -e
+
+echo "▸ lint"
+pnpm lint
+
+echo "▸ typecheck"
+pnpm typecheck
+
+echo "▸ build"
+pnpm build
+
+echo "✓ pre-push checks passed"

@@ -57,12 +57,18 @@ importers:
       '@vercel/config':
         specifier: ^0.2.1
         version: 0.2.1
+      concurrently:
+        specifier: ^9.2.1
+        version: 9.2.1
       eslint:
         specifier: ^9
         version: 9.39.4(jiti@2.6.1)
       eslint-config-next:
         specifier: 16.2.4
         version: 16.2.4(@typescript-eslint/parser@8.59.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
       pdfjs-dist:
         specifier: ^5.6.205
         version: 5.6.205
@@ -2420,6 +2426,11 @@ packages:
 
   hoverintent@2.2.1:
     resolution: {integrity: sha512-VyU54L1xW5rSqpsv/LJ6ecymGXsXXeGs9iVEKot4kKBCq5UodSAuy3DqX686LZxEpaMEfeCHPu4LndsMX5Q9eQ==}
+
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -5744,6 +5755,8 @@ snapshots:
       hermes-estree: 0.25.1
 
   hoverintent@2.2.1: {}
+
+  husky@9.1.7: {}
 
   ignore@5.3.2: {}
 
