@@ -1,6 +1,14 @@
-# UAE Code — RAG Chat App
+# UAE-CODE — RAG Chat App
 
-A public, Arabic-first chat interface over the **UAE Code** PDF (75 pages), built on Next.js + Convex with the `@convex-dev/rag` component, deployed on Vercel.
+Project name: **UAE-CODE** (slug: `uae-code`).
+
+Full Arabic title of the source document:
+**كود الإمارات للخدمات الحكومية وتصفير البيروقراطية**
+(_"The UAE Code for Government Services and Zero Bureaucracy"_)
+
+A public, Arabic-first chat interface over this 75-page PDF, built on Next.js + Convex with the `@convex-dev/rag` component, deployed on Vercel.
+
+Repo: https://github.com/ZenGardenDubai/uae-code
 
 ---
 
@@ -16,6 +24,8 @@ A public, Arabic-first chat interface over the **UAE Code** PDF (75 pages), buil
 | UI language | Arabic-only, RTL |
 | Bot response language | Always Arabic |
 | Design system | `@aegov/design-system-react` (UAE DS) |
+| Arabic headings font | **Alexandria** (Google Fonts — UAE DS spec) |
+| Arabic body font | **Noto Kufi Arabic** (Google Fonts — UAE DS spec) |
 | Deployment | Vercel (app) + Convex Cloud (backend) |
 
 ## 2. Tech stack
@@ -156,7 +166,7 @@ pnpm tsx scripts/ingest-pdf.ts
 2. Route handler calls Convex action `threads.ask`
 3. `rag.search({ query, limit: 6, filter: { namespace: "uae-code" } })`
 4. System prompt (Arabic):
-   > أجب دائماً بالعربية الفصحى، استناداً فقط إلى المقتطفات التالية من وثيقة "قانون الإمارات". إذا لم تجد الإجابة في المقتطفات، قل ذلك بوضوح. اذكر رقم الصفحة لكل معلومة.
+   > أجب دائماً بالعربية الفصحى، استناداً فقط إلى المقتطفات التالية من وثيقة "كود الإمارات للخدمات الحكومية وتصفير البيروقراطية". إذا لم تجد الإجابة في المقتطفات، قل ذلك بوضوح. اذكر رقم الصفحة لكل معلومة.
 5. Stream `anthropic/claude-sonnet-4-6` via Gateway with `streamText`
 6. Persist final assistant message + citations to Convex
 
@@ -164,10 +174,12 @@ pnpm tsx scripts/ingest-pdf.ts
 
 ```
 ┌─────────────────────────────────────────────┐
-│  [UAE emblem]   قانون الإمارات              │ ← UAE DS header
+│  [UAE emblem]   كود الإمارات                │ ← UAE DS header (title)
+│                 للخدمات الحكومية            │ ← subtitle line 1
+│                 وتصفير البيروقراطية         │ ← subtitle line 2
 ├─────────────────────────────────────────────┤
 │                                             │
-│     أهلاً بك. اسألني عن قانون الإمارات.     │ ← empty-state card
+│     أهلاً بك. اسألني عن كود الإمارات.       │ ← empty-state card
 │     [اقتراح 1]  [اقتراح 2]  [اقتراح 3]      │ ← suggested questions
 │                                             │
 │  ─────────────────────────────────────────  │
@@ -182,7 +194,10 @@ pnpm tsx scripts/ingest-pdf.ts
 ```
 
 - `<html lang="ar" dir="rtl">` at the root
-- Font: **Tajawal** or **IBM Plex Sans Arabic** via `next/font/google` (TBD)
+- Fonts (per UAE DS RTL spec, loaded via `next/font/google`):
+  - Headings → **Alexandria** (weights 200, 600, 700, 800)
+  - Body → **Noto Kufi Arabic** (weights 300, 400, 500, 600, 700, 900)
+  - Wire into UAE DS via CSS vars: `--font-heading: var(--font-alexandria); --font-body: var(--font-notokufi);`
 - Color tokens + components from `@aegov/design-system`
 - Source drawer slides in from the **left** (RTL-aware) when a citation chip is clicked
 
@@ -211,7 +226,7 @@ All managed via `vercel env pull` / `vercel.ts`.
 ### Phase 1 — Scaffold
 - [ ] `pnpm create next-app@latest` (TS, App Router, Tailwind)
 - [ ] Install `@aegov/design-system-react` + configure Tailwind plugin
-- [ ] Set `<html lang="ar" dir="rtl">` + Arabic font via `next/font`
+- [ ] Set `<html lang="ar" dir="rtl">` + load Alexandria & Noto Kufi Arabic via `next/font/google` and bind to UAE DS `--font-heading` / `--font-body`
 - [ ] `npx convex dev` — initialize Convex project
 - [ ] `vercel link` — link to Vercel project
 - [ ] Enable Vercel AI Gateway, pull `AI_GATEWAY_API_KEY` via `vercel env pull`
@@ -254,7 +269,6 @@ All managed via `vercel env pull` / `vercel.ts`.
 - [ ] Error states — all messages in Arabic
 - [ ] Mobile RTL layout + keyboard behavior
 - [ ] a11y pass: focus order in RTL, ARIA labels in Arabic, WCAG 2.2 AA
-- [ ] Basic analytics (PostHog) — anonymous question topics, latency
 
 ### Phase 7 — Deploy
 - [ ] `vercel deploy` preview, smoke-test end-to-end
@@ -267,7 +281,4 @@ All managed via `vercel env pull` / `vercel.ts`.
 
 ## 13. Open questions
 
-- **Project name** on Vercel/Convex (default: `uae-code`)
-- **Arabic font** — default Tajawal, or brand-specific?
-- **Source drawer style** — slide-in panel vs. inline expansion under message
-- **Analytics** — PostHog yes/no (project ID already set: `318706`)
+_All resolved — ready for Phase 1._
